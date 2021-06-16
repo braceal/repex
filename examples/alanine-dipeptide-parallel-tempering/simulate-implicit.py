@@ -27,7 +27,7 @@ if os.path.exists(output_filename):
 
 if resume:
     try:
-        print(Attempting to resume existing simulation...)
+        print("Attempting to resume existing simulation...")
         import repex
         simulation = repex.resume(output_filename)
         
@@ -36,13 +36,13 @@ if resume:
         simulation.extend(niterations_to_extend)    
 
     except Exception as e:
-        print(Could not resume existing simulation due to exception:)
+        print("Could not resume existing simulation due to exception:")
         print(e)
         print("")
         resume = False
 
 if not resume:
-    print "Starting new simulation..."
+    print("Starting new simulation...")
 
     # Set parallel tempering parameters
     from simtk import unit
