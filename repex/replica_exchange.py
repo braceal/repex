@@ -7,15 +7,15 @@ import copy
 
 import simtk.unit as units
 
-import thermodynamics
-from utils import find_matching_subclass, dict_to_named_tuple
-from timing import benchmark
-from mcmc import SamplerState
-import mcmc
-import citations
-import netcdf_io
-from version import version as __version__
-import dummympi
+from repex import thermodynamics
+from repex.utils import find_matching_subclass, dict_to_named_tuple
+from repex.timing import benchmark
+from repex.mcmc import SamplerState
+from repex import mcmc
+from repex import citations
+from repex import netcdf_io
+from repex.version import version as __version__
+from repex import dummympi
 
 import logging
 logger = logging.getLogger(__name__)
