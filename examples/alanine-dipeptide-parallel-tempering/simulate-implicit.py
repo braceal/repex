@@ -17,7 +17,24 @@ logging.basicConfig(level=logging.DEBUG)
 # RUN PARALLEL TEMPERING SIMULATION
 #=============================================================================================
 
-output_filename = "repex.nc" # name of NetCDF file to store simulation output
+import os
+import mpi4py
+mpi4py.rc.initialize = False
+from mpi4py import MPI  # noqa
+
+print("setup mpi")
+# init mpi4py:
+MPI.Init_thread()
+# get communicator: duplicate from comm world
+mpicomm = MPI.COMM_WORLD.Dup()
+# now match ranks between the mpi comm and the nccl comm
+os.environ["WORLD_SIZE"] = str(mpicomm.Get_size())
+os.environ["RANK"] = str(mpicomm.Get_rank())
+print(os.environ["WORLD_SIZE"])
+print("rank",os.environ["RANK"])
+
+
+output_filename = "new_repex.nc" #"repex.nc" # name of NetCDF file to store simulation output
 
 # If simulation file already exists, try to resume.
 import os.path
@@ -27,7 +44,7 @@ if os.path.exists(output_filename):
 
 if resume:
     try:
-        print "Attempting to resume existing simulation..."
+        print("Attempting to resume existing simulation...")
         import repex
         simulation = repex.resume(output_filename)
         
@@ -36,13 +53,13 @@ if resume:
         simulation.extend(niterations_to_extend)    
 
     except Exception as e:
-        print "Could not resume existing simulation due to exception:"
-        print e
-        print ""
+        print("Could not resume existing simulation due to exception:")
+        print(e)
+        print("")
         resume = False
 
 if not resume:
-    print "Starting new simulation..."
+    print("Starting new simulation...")
 
     # Set parallel tempering parameters
     from simtk import unit
@@ -71,7 +88,9 @@ if not resume:
 
     # Create parallel tempering simulation object.
     import repex
-    mpicomm = repex.dummympi.DummyMPIComm()
+   
+
+    #mpicomm = repex.dummympi.DummyMPIComm()
     parameters = {"number_of_iterations" : 10}
     parameters = {"collision_rate" : collision_rate}
     from repex import ParallelTempering

@@ -6,10 +6,10 @@ import simtk.unit as units
 
 import netCDF4 as netcdf
 
-from thermodynamics import ThermodynamicState
-from utils import str_to_system
-from version import version as __version__
-from analysis import Analyzer
+from repex.thermodynamics import ThermodynamicState
+from repex.utils import str_to_system
+from repex.version import version as __version__
+from repex.analysis import Analyzer
 
 import logging
 logger = logging.getLogger(__name__)
@@ -195,9 +195,9 @@ class NetCDFDatabase(Analyzer):
         """
         logger.debug("Storing thermodynamic states in NetCDF file...")
 
-        if self.ncfile.groups.has_key("thermodynamic_states"):
-            raise(IOError("Thermodynamic states have already been set!"))
-
+        #if self.ncfile.groups.has_key("thermodynamic_states"):
+        if "thermodynamic_states" in self.ncfile.groups:
+            raise(IOError("Thermodynamic states have already been set!"))        
         # Create a group to store state information.
         ncgrp_stateinfo = self.ncfile.createGroup('thermodynamic_states')
 
@@ -260,7 +260,7 @@ class NetCDFDatabase(Analyzer):
         # Create a group to store state information.
         ncgrp_options = self.ncfile.createGroup('options')
 
-        for option_name, option_value in parameters.iteritems():
+        for option_name, option_value in parameters.items():
             self._store_parameter(option_name, option_value)
 
     def _store_parameter(self, option_name, option_value):

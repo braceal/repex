@@ -2,16 +2,16 @@ import time
 
 import numpy as np
 
-from thermodynamics import ThermodynamicState
-import replica_exchange
-from replica_exchange import ReplicaExchange
-import netcdf_io
-from mcmc import SamplerState
+from repex.thermodynamics import ThermodynamicState
+from repex import replica_exchange
+from repex.replica_exchange import ReplicaExchange
+from repex import netcdf_io
+from repex.mcmc import SamplerState
 
 import logging
 logger = logging.getLogger(__name__)
 
-from constants import kB
+from repex.constants import kB
 
 
 class ParallelTempering(ReplicaExchange):

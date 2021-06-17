@@ -1,5 +1,5 @@
-from thermodynamics import ThermodynamicState
-from replica_exchange import ReplicaExchange
+from repex.thermodynamics import ThermodynamicState
+from repex.replica_exchange import ReplicaExchange
 
 import logging
 logger = logging.getLogger(__name__)
