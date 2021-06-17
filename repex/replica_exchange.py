@@ -139,7 +139,7 @@ class ReplicaExchange(object):
             options[key] = parameters.get(key, self.default_parameters[key])
         
         for key in parameters.keys():
-            if not options.has_key(key):
+            if not key in options:
                 options[key] = parameters[key]
 
         return options

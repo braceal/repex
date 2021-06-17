@@ -260,7 +260,7 @@ class NetCDFDatabase(Analyzer):
         # Create a group to store state information.
         ncgrp_options = self.ncfile.createGroup('options')
 
-        for option_name, option_value in parameters.iteritems():
+        for option_name, option_value in parameters.items():
             self._store_parameter(option_name, option_value)
 
     def _store_parameter(self, option_name, option_value):

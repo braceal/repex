@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.DEBUG)
 # RUN PARALLEL TEMPERING SIMULATION
 #=============================================================================================
 
-output_filename = "repex.nc" # name of NetCDF file to store simulation output
+output_filename = "new_repex.nc" #"repex.nc" # name of NetCDF file to store simulation output
 
 # If simulation file already exists, try to resume.
 import os.path

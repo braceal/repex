@@ -3,7 +3,7 @@ import time
 import numpy as np
 
 from repex.thermodynamics import ThermodynamicState
-import repex.replica_exchange
+from repex import replica_exchange
 from repex.replica_exchange import ReplicaExchange
 from repex import netcdf_io
 from repex.mcmc import SamplerState
