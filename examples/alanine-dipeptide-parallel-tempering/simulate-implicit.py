@@ -17,6 +17,23 @@ logging.basicConfig(level=logging.DEBUG)
 # RUN PARALLEL TEMPERING SIMULATION
 #=============================================================================================
 
+import os
+import mpi4py
+mpi4py.rc.initialize = False
+from mpi4py import MPI  # noqa
+
+print("setup mpi")
+# init mpi4py:
+MPI.Init_thread()
+# get communicator: duplicate from comm world
+mpicomm = MPI.COMM_WORLD.Dup()
+# now match ranks between the mpi comm and the nccl comm
+os.environ["WORLD_SIZE"] = str(mpicomm.Get_size())
+os.environ["RANK"] = str(mpicomm.Get_rank())
+print(os.environ["WORLD_SIZE"])
+print("rank",os.environ["RANK"])
+
+
 output_filename = "new_repex.nc" #"repex.nc" # name of NetCDF file to store simulation output
 
 # If simulation file already exists, try to resume.
@@ -71,7 +88,9 @@ if not resume:
 
     # Create parallel tempering simulation object.
     import repex
-    mpicomm = repex.dummympi.DummyMPIComm()
+   
+
+    #mpicomm = repex.dummympi.DummyMPIComm()
     parameters = {"number_of_iterations" : 10}
     parameters = {"collision_rate" : collision_rate}
     from repex import ParallelTempering
